@@ -27,8 +27,8 @@ https://devcenter.heroku.com/articles/config-vars#local_setup
     validate_transfer_db from_url
     validate_transfer_db to_url
 
-    puts "Source database: #{pretty_name(from)}"
-    puts "Target database: #{pretty_name(to)}"
+    puts "Source database: #{transfer_pretty_name(from)}"
+    puts "Target database: #{transfer_pretty_name(to)}"
 
     return unless confirm_command
 
@@ -71,7 +71,7 @@ private
     %{ env PGPASSWORD=#{uri.password} pg_restore --verbose --clean --no-acl --no-owner #{user} -h #{host} -d #{database} -p #{port} }
   end
 
-  def pretty_name(db_name)
+  def transfer_pretty_name(db_name)
     if (uri = URI.parse(db_name)).scheme
       "#{uri.path[1..-1]} on #{uri.host||"localhost"}:#{uri.port||5432}"
     else
