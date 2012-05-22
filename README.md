@@ -6,6 +6,14 @@
 
 ## Usage
 
+    $ heroku help pg:transfer
+	Usage: heroku pg:transfer
+	
+	 transfer data between databases
+	
+	 -f, --from DATABASE  # source database, defaults to DATABASE_URL on the app
+	 -t, --to   DATABASE  # target database, defaults to local $DATABASE_URL
+#
     $ heroku pg:transfer
     Source database: DATABASE on myapp.herokuapp.com
     Target database: myapp-development on localhost:5432
