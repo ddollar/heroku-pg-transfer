@@ -56,9 +56,10 @@ private
   def pg_dump_command(url)
     uri = URI.parse(url)
     database = uri.path[1..-1]
+    host = uri.host || "localhost"
     port = uri.port || "5432"
     user = uri.user ? "-U #{uri.user}" : ""
-    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{uri.host} #{user} -p #{port} #{database} }
+    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{host} #{user} -p #{port} #{database} }
   end
 
   def pg_restore_command(url)
