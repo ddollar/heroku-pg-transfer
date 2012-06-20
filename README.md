@@ -30,7 +30,7 @@
 #
     $ source .env && heroku pg:transfer --from $DATABASE_URL --to charcoal
     Source database: myapp-development on localhost:5432
-    Target database: DATABASE on myapp.herokuapp.com
+    Target database: HEROKU_POSTGRESQL_CHARCOAL on myapp.herokuapp.com
     pg_dump: reading schemas
     pg_dump: reading user-defined tables
     ...
