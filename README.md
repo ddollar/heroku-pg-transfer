@@ -14,7 +14,7 @@
 	 -f, --from DATABASE  # source database, defaults to DATABASE_URL on the app
 	 -t, --to   DATABASE  # target database, defaults to local $DATABASE_URL
 #
-    $ heroku pg:transfer
+    $ env DATABASE_URL=postgres://localhost/myapp-development heroku pg:transfer
     Source database: DATABASE on myapp.herokuapp.com
     Target database: myapp-development on localhost:5432
     pg_dump: reading schemas
