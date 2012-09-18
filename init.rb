@@ -68,7 +68,7 @@ private
     host = uri.host || "localhost"
     port = uri.port || "5432"
     user = uri.user ? "-U #{uri.user}" : ""
-    %{ env PGPASSWORD=#{uri.password} pg_restore --verbose --clean --no-acl --no-owner #{user} -h #{host} -d #{database} -p #{port} }
+    %{ env PGPASSWORD=#{uri.password} pg_restore --verbose --clean --no-acl -j 3 --no-owner #{user} -h #{host} -d #{database} -p #{port} }
   end
 
   def transfer_pretty_name(db_name)
