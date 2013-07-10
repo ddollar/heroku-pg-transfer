@@ -6,12 +6,14 @@ class Heroku::Command::Pg < Heroku::Command::Base
   #
   # transfer data between databases
   #
-  # -f, --from DATABASE  # source database, defaults to DATABASE_URL on the app
-  # -t, --to   DATABASE  # target database, defaults to local $DATABASE_URL
+  # -f, --from   DATABASE  # source database, defaults to DATABASE_URL on the app
+  # -t, --to     DATABASE  # target database, defaults to local $DATABASE_URL
+  # -b, --tables DATABASE  # tables to copy, defaults to all
   #
   def transfer
     from = options[:from] || "DATABASE"
     to   = options[:to]   || ENV["DATABASE_URL"] || env["DATABASE_URL"]
+    tables = (options[:tables] || "").split(",")
 
     error <<-ERROR unless to
 No local DATABASE_URL detected and --to not specified.
@@ -32,7 +34,7 @@ https://devcenter.heroku.com/articles/config-vars#local_setup
 
     return unless confirm_command
 
-    system %{ #{pg_dump_command(from_url)} | #{pg_restore_command(to_url)} }
+    system %{ #{pg_dump_command(from_url, tables)} | #{pg_restore_command(to_url)} }
   end
 
 private
@@ -53,13 +55,13 @@ private
     end
   end
 
-  def pg_dump_command(url)
+  def pg_dump_command(url, tables)
     uri = URI.parse(url)
     database = uri.path[1..-1]
     host = uri.host || "localhost"
     port = uri.port || "5432"
     user = uri.user ? "-U #{uri.user}" : ""
-    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{host} #{user} -p #{port} #{database} }
+    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{host} #{user} -p #{port} #{tables.map{|name| "-t #{name}" }.join(" ")} #{database} }
   end
 
   def pg_restore_command(url)
