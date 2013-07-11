@@ -8,7 +8,7 @@ class Heroku::Command::Pg < Heroku::Command::Base
   #
   # -f, --from   DATABASE  # source database, defaults to DATABASE_URL on the app
   # -t, --to     DATABASE  # target database, defaults to local $DATABASE_URL
-  # -b, --tables DATABASE  # tables to copy, defaults to all
+  # -b, --tables DATABASE  # tables to copy separated by commas, defaults to all
   #
   def transfer
     from = options[:from] || "DATABASE"
