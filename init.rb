@@ -77,7 +77,8 @@ private
     if (uri = URI.parse(db_name)).scheme
       "#{uri.path[1..-1]} on #{uri.host||"localhost"}:#{uri.port||5432}"
     else
-      "#{hpg_resolve(db_name).config_var} on #{app}.herokuapp.com"
+      resolver = Resolver.new
+      "#{resolver.resolve(db_name).config_var} on #{app}.herokuapp.com"
     end
   end
 
@@ -85,7 +86,8 @@ private
     if URI.parse(name_or_url).scheme
       name_or_url
     else
-      hpg_resolve(name_or_url).url
+      resolver = Resolver.new
+      resolver.resolve(name_or_url).url
     end
   end
 
