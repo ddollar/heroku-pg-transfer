@@ -7,11 +7,11 @@
 ## Usage
 
     $ heroku help pg:transfer
-  Usage: heroku pg:transfer
+	Usage: heroku pg:transfer
 
-   transfer data between databases
+	 transfer data between databases
 
-     -f, --from           DATABASE  # source database, defaults to DATABASE_URL on the app
+	 -f, --from           DATABASE  # source database, defaults to DATABASE_URL on the app
      -t, --to             DATABASE  # target database, defaults to local $DATABASE_URL
      -b, --tables         DATABASE  # tables to copy, defaults to all
      -B, --exclude_tables DATABASE  # tables to exclude, defaults to none
