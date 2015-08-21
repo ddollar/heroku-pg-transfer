@@ -64,7 +64,7 @@ private
     host = uri.host || "localhost"
     port = uri.port || "5432"
     user = uri.user ? "-U #{uri.user}" : ""
-    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{host} #{user} -p #{port} #{tables[:include].map{|name| "-t #{name}" }.join(" ")} #{tables[:exclude].map{|name| "-T #{name}" }.join(" ")} #{database} }
+    %{ env PGPASSWORD=#{uri.password} pg_dump --verbose -F c -h #{host} #{user} -p #{port} #{tables[:include].map{|name| "-t #{name}" }.join(" ")} #{tables[:exclude].map{|name| "--exclude-table-data=#{name}" }.join(" ")} #{database} }
   end
 
   def pg_restore_command(url)
