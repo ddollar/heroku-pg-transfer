@@ -80,7 +80,7 @@ private
     if (uri = URI.parse(db_name)).scheme
       "#{uri.path[1..-1]} on #{uri.host||"localhost"}:#{uri.port||5432}"
     else
-      "#{hpg_resolve(db_name).config_var} on #{app}.herokuapp.com"
+      "#{generate_resolver.resolve(db_name).config_var} on #{app}.herokuapp.com"
     end
   end
 
@@ -88,8 +88,13 @@ private
     if URI.parse(name_or_url).scheme
       name_or_url
     else
-      hpg_resolve(name_or_url).url
+      generate_resolver.resolve(name_or_url).url
     end
+  end
+
+  def generate_resolver
+    app_name = app rescue nil # will raise if no app, but calling app reads in arguments
+    Resolver.new(app_name, api)
   end
 
   def validate_transfer_db(url)
